@@ -17,7 +17,7 @@ CPP_DEPS += \
 src/%.o: ../src/%.cpp
 	@echo 'Building file: $<'
 	@echo 'Invoking: Cross G++ Compiler'
-	arm-frc-linux-gnueabi-g++ -std=c++1y -I"C:\Users\Srini/wpilib/cpp/current/include" -I"C:\Users\Srini\workspace\CSampleRobot\src" -I"C:\Users\Srini/wpilib/user/cpp/include" -O0 -Og -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@)" -o "$@" "$<"
+	arm-frc-linux-gnueabi-g++ -std=c++1y -I"C:\Users\Srini/wpilib/cpp/current/include" -I"C:\Users\Srini\git\CSampleRobot\CSampleRobot\src" -I"C:\Users\Srini/wpilib/user/cpp/include" -O0 -Og -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@)" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 

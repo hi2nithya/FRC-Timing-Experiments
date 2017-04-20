@@ -164,8 +164,9 @@ public:
 		tmr2->Start();
 		while (1) {
 			i++;
-			frc::Wait (30);
-			std::cout << "elapsed time " << tmr2->Get() << std::endl;
+			//frc::Wait (30);
+			//if (i % 10000)
+				//std::cout << "Elapsed time " << tmr2->Get() << std::endl;
 		}
 	}
 
