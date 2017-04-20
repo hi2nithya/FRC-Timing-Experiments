@@ -102,7 +102,7 @@ public class Robot extends SampleRobot {
 	
 	static int loopCount = 0;
 	static Timer tmr = new Timer();
-	static TimeStats t = new TimeStats(200, 2000);
+	static TimeStats t = new TimeStats(200, 200);
 	@Override
 	public void disabled() {
 		System.out.println("Disabled is called");

@@ -3,12 +3,17 @@ package org.usfirst.frc.team846.robot;
 public class TimeStats {
 	double min, max, avg, sq;
 	long count, logcount, initcount;
-	double prev;
+	double prev;	
+	
 	public TimeStats(int l, int i) {
-		min = 1E6; max = 0; avg = 0; count = 0; sq = 0;
-		prev = 0;
-		logcount = l; initcount = i;
+		Reset();
+		logcount = l; initcount = i; count = 0; prev = 0; avg = 0; sq = 0;
 	}
+	
+	public void Reset () {
+		min = 1E6; max = 0;	
+	}
+	
 	public void Record (double timer) {
 		double duration = timer - prev;
 		if (count > initcount) {
@@ -21,6 +26,7 @@ public class TimeStats {
 			if ((count % logcount) == 0) {
 				System.out.println("Max " + max + "; Min " + min + "; Avg " + 
 						avg + "; Count " + count + "; stDev " + Math.sqrt(sq / (count - initcount)));
+				Reset();
 			}
 		}
 		prev = timer;
