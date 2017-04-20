@@ -23,7 +23,7 @@ public class Histogram implements DoubleConsumer {
     public void accept(final double value) {
         if (value < min) histogram[0]++;
         else if (value > max) histogram[bins + 1]++;
-        else histogram[1 + (int) (value / interval)]++;
+        else histogram[1 + (int) ((value - min) / interval)]++;
     }
 
     public String toString() {
