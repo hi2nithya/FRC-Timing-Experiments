@@ -17,7 +17,7 @@ public class Histogram implements DoubleConsumer {
         this.max = max;
         this.bins = bins;
         interval = (max - min) / bins;
-        histogram = new long[bins + 2]; // bins and "less than min" and "less than max"
+        histogram = new long[bins + 2]; // bins and "less than min" and "greater than max"
     }
 
     public void accept(final double value) {
