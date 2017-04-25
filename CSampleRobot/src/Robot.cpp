@@ -11,17 +11,63 @@
 #include <Timer.h>
 #include <sys/prctl.h>
 
+using namespace std;
+
+class Histogram {
+
+     long *histogram;
+     double min, max;
+     double interval;
+     int bins;
+
+public:
+     Histogram( double min1,  double max1,  int bins1) {
+        min = min1;
+        max = max1;
+        bins = bins1;
+        interval = (max - min) / bins;
+        histogram = new long[bins + 2]; // bins and "less than min" and "less than max"
+    }
+
+     void accept( double value) {
+    	int Index;
+
+        if (value <= min) Index = 0;
+        else if (value >= max) Index = bins+1;
+        else Index = 1 + (int) ((value-min) / interval);
+        histogram[Index] += 1;
+    }
+
+    void toString() {
+        string sb;
+        cout << "<" <<min<<" : "<< histogram[0]<<std::endl;
+
+        for (int i = 1; i < bins + 1; i++) {
+        	cout <<
+        			(float) (min + (interval * (i - 1))) << " to "
+					<< (float) (min + (interval * i)) <<" : ";
+        	cout << histogram[i];
+        	cout << std::endl;
+        }
+
+        cout << ">" << max <<" : " << histogram[bins+1]<<std::endl;
+    }
+};
+
+
 class TimeStats {
 
 	double min, max, avg;
 	unsigned long count, logcount, initcount;
 	double prev;
+	Histogram *hist;
 
 	public:
 	TimeStats(int l, int i) {
 		min = 1E6; max = 0; avg = 0; count = 0;
 		prev = 0;
 		logcount = l; initcount = i;
+		hist = new Histogram (0.004, 0.006, 20);
 	}
 
 	void Record (double timer) {
@@ -29,10 +75,12 @@ class TimeStats {
 		if (count > initcount) {
 			if (duration > max) max = duration;
 			if (duration < min) min = duration;
+			hist->accept (duration);
 			avg = (avg*(count-initcount) + duration) / (1.0 + count - initcount);
 
 			if ((count % logcount) == 0) {
 				std::cout << "max " << max << "; min " << min << "; avg " << avg << "; count " << count << std::endl;
+				hist->toString();
 			}
 		}
 		prev = timer;
